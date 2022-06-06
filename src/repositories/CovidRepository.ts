@@ -47,7 +47,7 @@ class CovidRepository {
     const responseDataVaccines: ResponseDataVaccines = All;
 
     const { data: dataStates }: any = await axios.get(
-      `${this.URL_API_COVID}/cases?country=Brazil`
+      `${this.URL_API_COVID}/case?country=Brazil`
     );
 
     const listAllStates: Array<State> = [];

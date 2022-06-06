@@ -5,11 +5,7 @@ class State {
     private obitos: number,
     private ultima_atualizacao: string
   ) {
-    const [date, time] = this.ultima_atualizacao.split(" ");
-    const [year, month, day] = date.split("-");
-    const dateFormat = `${day}/${month}/${year} ${time}`;
-
-    this.ultima_atualizacao = dateFormat;
+    this.ultima_atualizacao = State.formatDate(this.ultima_atualizacao);
   }
 
   get getNome(): string {
@@ -26,6 +22,14 @@ class State {
 
   get getUltimaAtualizacao() {
     return this.ultima_atualizacao;
+  }
+
+  private static formatDate(unformatted: string): string {
+    const [date, time] = unformatted.split(" ");
+    const [year, month, day] = date.split("-");
+    const dateFormat = `${day}/${month}/${year} ${time}`;
+
+    return dateFormat;
   }
 }
 

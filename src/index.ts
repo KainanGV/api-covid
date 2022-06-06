@@ -1,5 +1,8 @@
+/* eslint-disable consistent-return */
 import http, { IncomingMessage, ServerResponse } from "http";
 
+import { AppError } from "./errors/AppError";
+import { ResourceError } from "./errors/ResourceError";
 import Factory from "./factories/factory";
 
 const covidService = Factory();
@@ -9,18 +12,34 @@ const DEFAULT_HEADER = { "Content-Type": "application/json" };
 
 const routes = {
   default: (request: IncomingMessage, response: ServerResponse) => {
-    response.write("Hello");
-    response.end();
+    const resourceError = new ResourceError("Resource is not exists", 400);
+    return resourceError.handleResourceError(response)();
   },
 
   "/indicadores:get": async (
     request: IncomingMessage,
     response: ServerResponse
-  ) => {
-    const countryStatesCases = await covidService.handle();
-    response.write(JSON.stringify(countryStatesCases));
-    response.end();
+  ): Promise<ServerResponse> => {
+    try {
+      const countryStatesCases = await covidService.handle();
+      response.write(JSON.stringify(countryStatesCases));
+      response.end();
+    } catch (error) {
+      // eslint-disable-next-line no-use-before-define
+      const appError = new AppError("Internal server error", 500);
+      return appError.handleErrorApp(response)();
+    }
   },
+};
+
+const handleError = (response: ServerResponse) => {
+  return (error) => {
+    console.error("Internal Error***", error);
+    response.writeHead(500, DEFAULT_HEADER);
+    response.write(JSON.stringify({ error: "Internal Server Error!" }));
+
+    return response.end();
+  };
 };
 
 const handler = (request: IncomingMessage, response: ServerResponse) => {
