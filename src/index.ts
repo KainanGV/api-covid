@@ -8,6 +8,7 @@ import Factory from "./factories/factory";
 const covidService = Factory();
 
 const PORT = process.env.PORT || 3000;
+
 const DEFAULT_HEADER = { "Content-Type": "application/json" };
 
 const routes = {
@@ -30,16 +31,6 @@ const routes = {
       return appError.handleErrorApp(response)();
     }
   },
-};
-
-const handleError = (response: ServerResponse) => {
-  return (error) => {
-    console.error("Internal Error***", error);
-    response.writeHead(500, DEFAULT_HEADER);
-    response.write(JSON.stringify({ error: "Internal Server Error!" }));
-
-    return response.end();
-  };
 };
 
 const handler = (request: IncomingMessage, response: ServerResponse) => {

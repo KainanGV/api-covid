@@ -6,7 +6,8 @@
   "author": "KainanGV <kainangabriel2019@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "build": "tsc /src/index.ts",
+    "build": "ts-node src/index.ts",
+    "start": "ts-node-dev --transpile-only --poll --ignore-watch node_modules src/index.ts",
     "dev": "ts-node-dev --respawn --transpile-only --poll --ignore-watch node_modules src/index.ts",
     "dev:debugger": "ts-node-dev --inspect --respawn --transpile-only --poll --ignore-watch node_modules src/index.ts",
     "lint": "eslint --ext .ts,.vue --ignore-path .gitignore .",
