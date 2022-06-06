@@ -1,45 +1,78 @@
-import fetch from "node-fetch";
+import axios from "axios";
 
 import Country from "../entities/Country";
 import State from "../entities/State";
+
+type ResponseDataVaccines = {
+  administered: number;
+  people_vaccinated: number;
+  people_partially_vaccinated: number;
+  country: string;
+  population: number;
+  sq_km_area: number;
+  life_expectancy: string;
+  elevation_in_meters: number;
+  continent: string;
+  abbreviation: string;
+  location: string;
+  iso: number;
+  capital_city: string;
+  updated: string;
+};
+
+type ResponseDataState = {
+  lat: string;
+  long: string;
+  confirmed: number;
+  recovered: number;
+  deaths: number;
+  updated: string;
+};
 
 class CovidRepository {
   private URL_API_COVID = "https://covid-api.mmediagroup.fr/v1";
 
   async findByCovidCaseBrazil(): Promise<Country> {
-    const response = await fetch(
+    const { data }: any = await axios.get(
       `${this.URL_API_COVID}/vaccines?country=Brazil`
     );
 
-    const data: any = await response.json();
+    const { All } = data;
 
-    const responseState = await fetch(
+    const responseDataVaccines: ResponseDataVaccines = All;
+
+    const { data: dataStates }: any = await axios.get(
       `${this.URL_API_COVID}/cases?country=Brazil`
     );
 
-    const dataStates: any = await responseState.json();
+    const listAllStates: Array<State> = [];
+
+    // eslint-disable-next-line no-restricted-syntax, guard-for-in
+    for (const prop in dataStates) {
+      if (prop !== "All") {
+        const state: ResponseDataState = dataStates[prop];
+        const stateInstance = new State(
+          prop,
+          state.confirmed,
+          state.deaths,
+          state.updated
+        );
+
+        listAllStates.push(stateInstance);
+      }
+    }
 
     const country = new Country(
-      data.all.country,
-      data.all.life_expectancy,
-      0,
-      data.all.population,
-      data.all.administered,
-      data.all.elevation_in_meters,
-      data.all.people_vaccinated,
-      data.all.people_partially_vaccinated
+      responseDataVaccines.country,
+      responseDataVaccines.life_expectancy,
+      dataStates.All.confirmed,
+      responseDataVaccines.population,
+      dataStates.All.deaths,
+      responseDataVaccines.administered,
+      responseDataVaccines.people_vaccinated,
+      responseDataVaccines.people_partially_vaccinated,
+      listAllStates
     );
-
-    const state = new State(
-      "Test",
-      dataStates.Global.all.confirmed,
-      dataStates.Global.all.deaths,
-      dataStates.Global.all.recovered
-    );
-
-    const listStates: State[] = country.getStates;
-
-    listStates.push(state);
 
     return country;
   }

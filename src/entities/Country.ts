@@ -3,21 +3,21 @@ import State from "./State";
 class Country {
   constructor(
     private nome: string,
-    private expectativa_vida: number,
+    private expectativa_vida: string,
     private total_casos_confirmados: number,
     private numero_populacao: number,
     private total_obitos: number,
     private total_doses_aplicadas: number,
     private pessoas_vacinadas: number,
     private pessoas_parcialmente_vacinadas: number,
-    private states?: State[]
+    private estados?: State[]
   ) {}
 
   get getNome() {
     return this.nome;
   }
 
-  get expectativaVida(): number {
+  get expectativaVida(): string {
     return this.expectativa_vida;
   }
 
@@ -45,8 +45,8 @@ class Country {
     return this.pessoas_parcialmente_vacinadas;
   }
 
-  get getStates(): State[] {
-    return this.states;
+  get getEstados(): State[] {
+    return this.estados;
   }
 }
 
