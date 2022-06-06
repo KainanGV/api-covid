@@ -29,10 +29,15 @@ type ResponseDataState = {
   updated: string;
 };
 
+type responseData = {
+  pais: object;
+  estados: State[];
+};
+
 class CovidRepository {
   private URL_API_COVID = "https://covid-api.mmediagroup.fr/v1";
 
-  async findByCovidCaseBrazil(): Promise<Country> {
+  async findByCovidCaseBrazil(): Promise<object> {
     const { data }: any = await axios.get(
       `${this.URL_API_COVID}/vaccines?country=Brazil`
     );
@@ -74,7 +79,21 @@ class CovidRepository {
       listAllStates
     );
 
-    return country;
+    const objectFinal: responseData = {
+      pais: {
+        nome: country.getNome,
+        expectativa_vida: country.getExpectativaVida,
+        total_casos_confirmados: country.getTotalCasosConfirmados,
+        numero_populacao: country.getNumeroPopulacao,
+        total_obitos: country.getTotalObitos,
+        total_doses_aplicadas: country.getDosesAplicadas,
+        pessoas_vacinadas: country.getPessoasVacinadas,
+        pessoas_parcialmente_vacinadas: country.getPessoasParcialmenteVacinadas,
+      },
+      estados: country.getEstados,
+    };
+
+    return objectFinal;
   }
 }
 

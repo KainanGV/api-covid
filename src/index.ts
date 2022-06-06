@@ -17,8 +17,9 @@ const routes = {
     request: IncomingMessage,
     response: ServerResponse
   ) => {
-    const countryStatesCases = covidService.handle();
+    const countryStatesCases = await covidService.handle();
     response.write(JSON.stringify(countryStatesCases));
+    response.end();
   },
 };
 

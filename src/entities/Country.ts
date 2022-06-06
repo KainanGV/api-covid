@@ -17,7 +17,7 @@ class Country {
     return this.nome;
   }
 
-  get expectativaVida(): string {
+  get getExpectativaVida(): string {
     return this.expectativa_vida;
   }
 

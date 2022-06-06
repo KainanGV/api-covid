@@ -4,7 +4,7 @@ import CovidRepository from "../repositories/CovidRepository";
 class CovidService {
   constructor(private covidRepository: CovidRepository) {}
 
-  async handle(): Promise<Country> {
+  async handle(): Promise<object> {
     return this.covidRepository.findByCovidCaseBrazil();
   }
 }

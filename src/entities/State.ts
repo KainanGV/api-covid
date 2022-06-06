@@ -4,7 +4,13 @@ class State {
     private confirmados: number,
     private obitos: number,
     private ultima_atualizacao: string
-  ) {}
+  ) {
+    const [date, time] = this.ultima_atualizacao.split(" ");
+    const [year, month, day] = date.split("-");
+    const dateFormat = `${day}/${month}/${year} ${time}`;
+
+    this.ultima_atualizacao = dateFormat;
+  }
 
   get getNome(): string {
     return this.nome;
