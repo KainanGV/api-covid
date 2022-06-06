@@ -10,7 +10,7 @@ export class ResourceError {
     const DEFAULT_HEADER = { "Content-Type": "application/json" };
 
     return () => {
-      console.error("Resource is not exists***", this.message);
+      console.error(`${this.message}***`);
       response.writeHead(this.statusCode, DEFAULT_HEADER);
       response.write(JSON.stringify({ error: this.message }));
 

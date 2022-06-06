@@ -13,7 +13,7 @@ export class AppError {
     const DEFAULT_HEADER = { "Content-Type": "application/json" };
 
     return () => {
-      console.error("Internal Error***", this.message);
+      console.error(`${this.message}***`);
       response.writeHead(this.statusCode, DEFAULT_HEADER);
       response.write(JSON.stringify({ error: "Internal Server Error!" }));
 
