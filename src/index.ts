@@ -1,5 +1,7 @@
 /* eslint-disable consistent-return */
+import finalHandler from "finalhandler";
 import http, { IncomingMessage, ServerResponse } from "http";
+import morgan from "morgan";
 
 import { AppError } from "./errors/AppError";
 import { ResourceError } from "./errors/ResourceError";
@@ -10,6 +12,8 @@ const covidService = Factory();
 const PORT = process.env.PORT || 3000;
 
 const DEFAULT_HEADER = { "Content-Type": "application/json" };
+
+const logger = morgan("combined");
 
 const routes = {
   default: (request: IncomingMessage, response: ServerResponse) => {
@@ -34,6 +38,11 @@ const routes = {
 };
 
 const handler = (request: IncomingMessage, response: ServerResponse) => {
+  const done = finalHandler(request, response);
+  logger(request, response, function (err) {
+    if (err) return done(err);
+  });
+
   const { url, method } = request;
   const [first, route] = url.split("/");
 
