@@ -11,7 +11,7 @@ export class ResourceError {
 
     return () => {
       // console.error(`${this.message}***`);
-      response.writeHead(this.statusCode);
+      response.writeHead(this.statusCode, DEFAULT_HEADER);
       response.write(JSON.stringify({ error: this.message }));
 
       return response.end();
