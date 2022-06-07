@@ -10,8 +10,8 @@ export class ResourceError {
     const DEFAULT_HEADER = { "Content-Type": "application/json" };
 
     return () => {
-      console.error(`${this.message}***`);
-      response.writeHead(this.statusCode, DEFAULT_HEADER);
+      // console.error(`${this.message}***`);
+      response.writeHead(this.statusCode);
       response.write(JSON.stringify({ error: this.message }));
 
       return response.end();

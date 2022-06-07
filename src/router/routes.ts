@@ -26,6 +26,7 @@ export default class Routes {
 
       response.writeHead(200, DEFAULT_HEADER);
       response.write(JSON.stringify(countryStatesCases));
+
       response.end();
     } catch (error) {
       // eslint-disable-next-line no-use-before-define
@@ -34,7 +35,9 @@ export default class Routes {
     }
   }
 
-  handler(request: IncomingMessage, response: ServerResponse) {
+  handler(...args): Promise<ServerResponse> {
+    const [request, response] = args;
+
     response.setHeader("Access-Control-Allow-Origin", "*");
     const done = finalHandler(request, response);
     logger(request, response, function (err): void {

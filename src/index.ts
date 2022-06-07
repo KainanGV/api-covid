@@ -1,7 +1,7 @@
 /* eslint-disable consistent-return */
 import http from "http";
 
-import Routes from "./router/router";
+import Routes from "./router/routes";
 
 const PORT = process.env.PORT || 3000;
 

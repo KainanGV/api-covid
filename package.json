@@ -12,7 +12,8 @@
     "dev:debugger": "ts-node-dev --inspect --respawn --transpile-only --poll --ignore-watch node_modules src/index.ts",
     "lint": "eslint --ext .ts,.vue --ignore-path .gitignore .",
     "lint:fix": "eslint --ext .ts,.vue --ignore-path .gitignore . --fix",
-    "test": "jest"
+    "test": "jest",
+    "test:watch": "jest --watch"
   },
   "devDependencies": {
     "@types/axios": "^0.14.0",
