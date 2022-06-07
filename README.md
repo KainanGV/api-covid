@@ -13,35 +13,47 @@ Obs: caso queira executar com docker siga os passos logo a abaixo.
 
 # Configurando o projeto para rodar na sua máquina
 
+## Clonar o projeto
 ```shell
-# Clonar o projeto
+
 git clone https://github.com/KainanGV/api-covid.git
+```
 
-# Entra na pasta do projeto
+## Entra na pasta do projeto
+```shell
 cd api-covid
+```
 
-# Instalar dependências
+## Instalar dependências
+
+```shell
 npm install
-# ou com yarn
+```
+
+## Ou com yarn
+```shell
 yarn
 ```
 
 # Executando o projeto
 
+## Ligando o projeto
+
 ```shell
-# Ligando o projeto
 yarn dev
 ```
 
 # Executando o projeto com docker
-
 Tendo em vista o docker e o docker compose instalado e configurado na sua máquina,  
 basta seguir com os comandos abaixo em um terminal.
 
+## Ligando o projeto
 ```shell
-# Ligando o projeto
 docker-compose up
-# ou Ligando o projeto em background
+```
+
+## Ou Ligando o projeto em background
+```shell
 docker-compose up -d
 ```
 
